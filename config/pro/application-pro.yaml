@@ -1,0 +1,8 @@
+# Env vars for the 'pro' environment — flat KEY: value pairs only.
+# Every key must also exist in every other env file (CI enforces parity).
+# NEVER put secrets here (keys ending _PASSWORD/_SECRET/_TOKEN/PRIVATE_KEY
+# fail CI) — those belong in the platform credential store.
+
+EXAMPLE_ENDPOINT: https://api.example.com/v1
+EXAMPLE_TTL_SECONDS: "3600"
+EXAMPLE_FEATURE_FLAG: "false"
