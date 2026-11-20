@@ -10,9 +10,9 @@ A ConfigMap component is the deployable projection of an app's *non-secret*
 runtime configuration: `config/<env>/application-<env>.yaml` holds flat
 `KEY: value` pairs that `cm-deploy` upserts into the target Vercel project
 (via `POST /v10/projects/{project}/env?upsert=true`). The binding to the app
-is declared in `deploy-manifest`: the CM component lists the app's infra
-ids in its `infra:` and the app lists the CM in `needs:` (config lands
-before the app deploys).
+is declared in the app-model OAM (`needs:` on the app, so config lands
+before it deploys) plus this repo's `.deploy/cd/{env}/cd.yml` — the ci_ids
+matching the app it configures.
 
 ## Structure
 
@@ -32,7 +32,7 @@ before the app deploys).
 - Keep keys in sync across every env file — `cm-config.py validate` enforces
   parity (missing/extra keys fail the PR).
 - On any change to this repo, cut a release (`release.yml`) and bump the
-  component's `tag` in `deploy-manifest` — the manifest PR validates the
+  component's `version` in the app-model OAM — its PR validates the
   tag exists.
 - Upsert semantics only: removing a key from the file does **not** delete
   the var from Vercel — clean stale vars in the Vercel dashboard by hand.
